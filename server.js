@@ -12,6 +12,7 @@ const passUserToView=require('./middelware/pass-user-to-veiw.js')
 
 //models
 const User = require("./models/user");
+const Listing=require("./models/listing");
 
 
 //middleware
@@ -41,7 +42,8 @@ app.use(
 app.use(passUserToView);
 //====================================================
 //import controller
-const authCotroller = require('./controllers/authentication.js')
+const authCotroller = require('./controllers/authentication.js');
+const listingController= require('./controllers/listings.js');
 
 //==================================================
 
@@ -63,8 +65,26 @@ app.post('/auth/sign-in', authCotroller.signIn)
 //sign out page and kill session
 app.get('/auth/sign-out', authCotroller.signOut);
 
-//vip
-app.get('/vip-lounge', isSignedIn, authCotroller.welcome)
+app.use(isSignedIn); // signed in to see after this
+// //vip
+// app.get('/vip-lounge', isSignedIn, authCotroller.welcome)
+//=============================================================
+//list route
+
+//get index page
+app.get('/listings', listingController.index);
+
+//add page
+app.get('/listings/new', listingController.addListing );
+
+//post the add
+app.post('/listings/:userId',listingController.createListing)
+
+//view details
+app.get('/listings/:listingId', listingController.show)
+
+//delete
+app.delete('/listings/:userId/:listingId',listingController.deleteListing)
 
 
 //=============================================
