@@ -21,17 +21,21 @@ const listingSchema = new mongoose.Schema({
     required: true,
     min: 0,
   },
-  imgUrl:{
+  imgUrl: {
     type: String,
-    default:'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    default: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   },
   //link with the user model, will grab user id when logged in
-  owner:{
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  favoriteByUsers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 
-}, {timestamps: true});
+}, { timestamps: true });
 
 
 // ... listingSchema located above

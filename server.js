@@ -91,6 +91,12 @@ app.get('/listings/:userId/:listingId/edit', listingController.editListing)
 
 //post
 app.put('/listings/:userId/:listingId', listingController.updateListing)
+//==================================================================
+//fav routes
+
+app.post('/listings/:listingId/favorited-by/:userId', listingController.addFav);
+
+app.delete('/listings/:listingId/favorited-by/:userId', listingController.removeFav)
 
 //=============================================
 app.listen(process.env.PORT || 3000, () => {

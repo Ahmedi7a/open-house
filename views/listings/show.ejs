@@ -1,23 +1,42 @@
 <%- include('../partials/head') %> <br>
-    <div class="container">
-        <h1>Details</h1>
-   
-                <div class="card mt-2" style="width: 18rem;">
-                    <img src="<%= listing.imgUrl %>" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Price: $<%= listing.price %></h5>
-                      <p class="card-text"><%= listing.streetAddress %></p>
-                      <p class="card-text"><%= listing.size %> m/sq</p>
-                      <p class="card-text">Owner: <%= listing.owner.username || 'Unkown' %> </p>
-                      <a href="/listings" class="btn btn-primary">Go Back</a>
-                      <% if (listing.owner._id.equals(user._id)) { %>
-                        <form action="/listings/<%= listing.owner._id %>/<%= listing._id %>?_method=DELETE" method="POST">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                        <a href="/listings/<%=listing.owner._id %>/<%= listing._id %>/edit">Edit this listing</a>
-                     <% } %>
-                    </div>
-                  </div>
-    </div>
+  <div class="container">
+    <h1>Details</h1>
 
-<%- include('../partials/footer') %>
+    <div class="card mt-2" style="width: 18rem;">
+      <img src="<%= listing.imgUrl %>" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Price: $<%= listing.price %>
+        </h5>
+        <p class="card-text">
+          <%= listing.streetAddress %>
+        </p>
+        <p class="card-text">
+          <%= listing.size %> m/sq
+        </p>
+        <p class="card-text">Owner: <%= listing.owner.username || 'Unkown' %>
+        </p>
+        <a href="/listings" class="btn btn-primary">Go Back</a>
+        <% if (listing.owner._id.equals(user._id)) { %>
+          <form action="/listings/<%= listing.owner._id %>/<%= listing._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          <a href="/listings/<%=listing.owner._id %>/<%= listing._id %>/edit">Edit this listing</a>
+          <% } %>
+      </div>
+      <!-- fav part -->
+      <h5>Favorites</h5>
+      <p class="card-text">Favorited by <%= listing.favoriteByUsers.length %></p>
+      <% if (userHasFavorited) { %>
+          <p class="text-muted">You've favorited this listing!</p>
+          <form action="/listings/<%= listing._id %>/favorited-by/<%= user._id %>?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-info">Unfavorite it!</button>
+          </form>
+      <% } else { %>
+          <form action="/listings/<%= listing._id %>/favorited-by/<%= user._id %>" method="POST">
+              <button type="submit" class="btn btn-info">Favorite it!</button>
+          </form>
+      <% } %>
+    </div>
+  </div>
+
+  <%- include('../partials/footer') %>
