@@ -86,6 +86,11 @@ app.get('/listings/:listingId', listingController.show)
 //delete
 app.delete('/listings/:userId/:listingId',listingController.deleteListing)
 
+//edit page
+app.get('/listings/:userId/:listingId/edit', listingController.editListing)
+
+//post
+app.put('/listings/:userId/:listingId', listingController.updateListing)
 
 //=============================================
 app.listen(process.env.PORT || 3000, () => {

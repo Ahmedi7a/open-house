@@ -3,7 +3,7 @@
         <h1>Details</h1>
    
                 <div class="card mt-2" style="width: 18rem;">
-                    <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+                    <img src="<%= listing.imgUrl %>" class="card-img-top" alt="...">
                     <div class="card-body">
                       <h5 class="card-title">Price: $<%= listing.price %></h5>
                       <p class="card-text"><%= listing.streetAddress %></p>
@@ -14,6 +14,7 @@
                         <form action="/listings/<%= listing.owner._id %>/<%= listing._id %>?_method=DELETE" method="POST">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
+                        <a href="/listings/<%=listing.owner._id %>/<%= listing._id %>/edit">Edit this listing</a>
                      <% } %>
                     </div>
                   </div>

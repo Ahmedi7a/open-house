@@ -52,10 +52,45 @@ async function deleteListing(req,res){
         if(listing.owner.equals(req.params.userId)){
             await listing.deleteOne()
             res.redirect('/listings');
-        }else{
+      
 
         }
-    } catch (err) {
+    }
+    catch (err) {
+        console.log(err);
+        res.redirect('/');
+    }
+}
+
+//edit page
+async function editListing(req,res){
+    try {
+        const listing= await Listing.findById(req.params.listingId).populate('owner');
+        console.log(listing)
+        if(listing.owner.equals(req.params.userId)){
+             res.render('listings/edit.ejs',{title:'Edit' , listing})  
+        }else{
+            res.send('you dont have permission');
+        }
+     
+        
+
+        }
+    catch (err) {
+        console.log(err);
+        res.redirect('/');
+    }
+}
+
+async function updateListing(req,res){
+    try {
+        const listing= await Listing.findByIdAndUpdate(req.params.listingId, req.body, {new:true})
+        res.redirect(`/listings/${listing._id}`)
+      
+        
+
+        }
+    catch (err) {
         console.log(err);
         res.redirect('/');
     }
@@ -74,4 +109,6 @@ module.exports = {
     createListing,
     show,
     deleteListing,
+    editListing,
+    updateListing,
 }
